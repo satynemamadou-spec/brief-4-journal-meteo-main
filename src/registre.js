@@ -7,12 +7,17 @@ import { estDateValide, versNombre } from './outils.js';
 //            'M11 | 2026-10-25 | 27.5 °C | 4 mm | air 79 %' (JavaScript affiche un point décimal,
 //            même si la virgule est acceptée à la saisie)
 export function formaterReleve(releve) {
-  throw new Error('TODO : coder formaterReleve dans src/registre.js');
+  return `${releve.id} | ${releve.date} | ${releve.temperatureC} °C | ${releve.pluieMm} mm | air ${releve.humiditeAirPct} %`;
+
 }
 
 // Renvoie un texte avec un relevé par ligne (lignes séparées par '\n'),
 // ou 'Aucun relevé enregistré.' si la liste est vide.
 export function listerReleves(releves) {
+  if (releves.length===0){
+    return 'Aucun relevé enregistré.';
+  }
+  return releves.map(formaterReleve).join('\n')
   throw new Error('TODO : coder listerReleves dans src/registre.js');
 }
 
