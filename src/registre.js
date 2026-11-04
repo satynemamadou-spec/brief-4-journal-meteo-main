@@ -23,6 +23,7 @@ export function listerReleves(releves) {
 
 // Renvoie le relevé qui a cet identifiant, ou undefined s'il n'existe pas.
 export function trouverParId(releves, id) {
+  return releves.find(b=>b.id===id)
   throw new Error('TODO : coder trouverParId dans src/registre.js');
 }
 
@@ -33,16 +34,53 @@ export function trouverParId(releves, id) {
 // (négatif ou décimal accepté) · pluieMm nombre positif ou nul · humiditeAirPct nombre entre 0 et 100.
 // Un message par règle non respectée ; n'ajoutez aucune autre règle. Le journal reçu n'est pas modifié.
 export function verifierReleve(saisie, releves) {
-  throw new Error('TODO : coder verifierReleve dans src/registre.js');
+const erreur = []
+if (saisie.id ===''){
+  erreur.push ('id obligatoire')
+}else if (trouverParId(releves, saisie.id) !== undefined){
+  erreur.push('cest un id deja definit');
 }
+ if (!estDateValide(saisie.date)){
+  erreur.push ('Date invalide, la date doit etre au format AAA-MM-JJ');
+ }
+ const temperature = versNombre(saisie.temperatureC)
+ if (Number.isNaN(temperature)){
+  erreur.push ("temperature invalide")
+}
+const pluie = versNombre(saisie.pluieMm)
+if (Number.isNaN(pluie)||pluie<0){
+erreur.push (" pluieMn invalide" )
+}
+const humidite =versNombre(saisie.humiditeAirPct)
+if (Number.isNaN(humidite) || humidite<0 || humidite>100){
+  erreur.push("humidité est invalide")
+}
+return erreur 
+}
+
 
 // Fabrique le relevé à enregistrer à partir d'une saisie VALIDE : les trois mesures deviennent des nombres.
 export function creerReleve(saisie) {
-  throw new Error('TODO : coder creerReleve dans src/registre.js');
+  return{
+    id: saisie.id,
+    date:saisie.date,
+    temperatureC:versNombre( saisie.temperatureC),
+    pluieMm: versNombre(saisie.pluieMm),
+    humiditeAirPct:versNombre(saisie.humiditeAirPct)
+  }
 }
 
 // Ajoute la saisie au journal si elle est valide (verifierReleve, puis creerReleve).
 // Renvoie les erreurs : [] si le relevé a été ajouté ; sinon les messages, et rien n'est ajouté.
 export function ajouterReleve(releves, saisie) {
-  throw new Error('TODO : coder ajouterReleve dans src/registre.js');
-}
+  const erreur = verifierReleve(saisie,releves)
+  if (erreur.length >0){
+    return erreur
+  }
+  releves.push(creerReleve(saisie))
+  return[]
+} 
+
+
+
+
