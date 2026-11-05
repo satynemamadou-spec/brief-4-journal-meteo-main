@@ -49,7 +49,7 @@ if (saisie.id ===''){
 }
 const pluie = versNombre(saisie.pluieMm)
 if (Number.isNaN(pluie)||pluie<0){
-erreur.push (" pluieMn invalide" )
+erreur.push (" pluieMm invalide" )
 }
 const humidite =versNombre(saisie.humiditeAirPct)
 if (Number.isNaN(humidite) || humidite<0 || humidite>100){
