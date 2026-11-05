@@ -79,4 +79,65 @@ ajouter (releves);
   } finally{ 
     fermerSaisie()
   }
+async function ajouter (releves ){
+  console.log('--- Ajouter un relevé ----');
+  const id= await
+demander('Identifiant (ex.M11) : ');
+if ( id ===null) 
+  return false;
+const date = await demander ( 'Date du relevé (AAA-MM-JJ): ');
+if (date ===null) 
+  return false;
+const temperatureC =await demander('Temperature en °C :')
+if (temperatureC=== null)
+  return false;
+const pluieMm = await demander(' pluie en mm :')
+if ( pluieMm === null) 
+  return false;
+const humiditAirPct= await demander (" humidité relative de l'air en %")
+if ( humiditAirPct=null) 
+  return false;
 
+const saisie = {id : id.toUppercase(), date , temperatureC,pluieMm,humiditAirPct};
+const erreurs = ajouterReleve(releves, saisie);
+if ( erreurs.length>0){
+  console.log('Relevé refusé : ');
+  for (const erreur of erreurs ){
+    console.log ( `  - ${erreur}`);
+  }
+console.log (`Le journal compte toujours ${releves.length} relevé(s).`);
+return true;
+}
+try { await enregistrerJson(FICHIER_DONNEES, releves);
+}
+catch( erreur){
+  releves.pop();
+  throw erreur;
+}
+console.log (`Relevé ${saisie.id} ajouter. Le journal compte ${releves.length} relevé (s).`);
+return true;
+}
+async function rechercher(releves ){
+  console.log (`---Rechercher ---
+    1- Par identifiant 
+    2- Par date 
+    3- Les journées pluvieuses (au moins $ {SEUIL_JOUR PLUVIEUX}mm)`);
+    const choix = awaitdemander (`votre choix :`);
+    if ( choix === null ) 
+      return false
+    if ( choix === '1'){
+      const saisieId = await demander ('Identifiant : ');
+      if ( saisieId=== null)
+        return false;
+      const id= saisieId.toUppercase();
+      const releve = trouverParId(releves ,id);
+      console.log (releve ? formaterReleve (releve): `Relevé ${id} introuvable.`);
+    }
+    else if (choix === '2'){
+      const date = await demander ( 'date (AAA-MM-JJ) :');
+      if ( date === null)
+         return false ;
+        const releve = trouverReleve(releve,date )
+    }
+  
+}
