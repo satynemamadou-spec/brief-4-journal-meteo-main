@@ -51,3 +51,5 @@ les personnes qui m'ont aidé sont :
 TANOH LEVI m'a aidé dans la comprehision du mini projet 
 SOUMAHORO CHEICK TIDYANE : quand j'avais des problèmes au niveau de mes tests et mon terminal 
 N'DIAMOI CHRIST : la comprehension de certaines fonction et methode pour faire affiché les tests vert 
+ DALY MARIE MANNUELA  ,  KOUASSI AFFOUE THEYDIE ET ESSY ABRAN  m'ont motivé et  aidé dans la repetition .
+ 
